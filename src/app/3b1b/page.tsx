@@ -69,12 +69,14 @@ export default function CinematicRLM() {
         console.log('⏹ Audio ended:', audio.src);
       });
       
-      audio.addEventListener('error', (e) => {
+      audio.addEventListener('error', () => {
+        const error = audio.error;
         console.error('❌ Audio error:', {
-          error: e,
-          src: audio.src,
+          message: error?.message || 'Unknown error',
+          code: error?.code,
+          src: audio.src || '(no src set)',
           networkState: audio.networkState,
-          readyState: audio.readyState
+          readyState: audio.readyState,
         });
       });
     }
@@ -93,9 +95,9 @@ export default function CinematicRLM() {
     
     const sceneData = getSceneData(currentScene);
     const audioFile = sceneData.audioFile;
-    const sceneDuration = sceneData.duration;
+    const sceneDuration = sceneData.duration; // Use actual audio duration from manifest
     
-    console.log(`Scene ${currentScene + 1}: Loading "${sceneData.title}" (${sceneDuration}s) - ${audioFile}`);
+    console.log(`Scene ${currentScene + 1}: Loading "${sceneData.title}" (${sceneDuration.toFixed(1)}s) - ${audioFile}`);
     
     // Update camera for this scene
     if (currentSceneData?.camera) {
@@ -110,18 +112,74 @@ export default function CinematicRLM() {
       return;
     }
 
-    // PLAYING: Load and immediately play audio
-    audioRef.current.src = audioFile;
-    audioRef.current.muted = isMuted;
-    audioRef.current.load();
+    // PLAYING: Load and play audio
+    const playAudio = async () => {
+      if (!audioRef.current) return;
+      
+      try {
+        audioRef.current.src = audioFile;
+        audioRef.current.muted = isMuted;
+        audioRef.current.load();
+        
+        // Wait for canplay event before playing
+        await new Promise<void>((resolve, reject) => {
+          if (!audioRef.current) {
+            reject(new Error('Audio element lost'));
+            return;
+          }
+          
+          const timeout = setTimeout(() => {
+            reject(new Error('Timeout waiting for canplay'));
+          }, 5000);
+          
+          const canplayHandler = () => {
+            clearTimeout(timeout);
+            if (audioRef.current) {
+              audioRef.current.removeEventListener('canplay', canplayHandler);
+              audioRef.current.removeEventListener('error', errorHandler);
+            }
+            resolve();
+          };
+          
+          const errorHandler = () => {
+            clearTimeout(timeout);
+            if (audioRef.current) {
+              audioRef.current.removeEventListener('canplay', canplayHandler);
+              audioRef.current.removeEventListener('error', errorHandler);
+            }
+            reject(new Error('Failed to load audio'));
+          };
+          
+          if (audioRef.current.readyState >= 3) {
+            clearTimeout(timeout);
+            resolve();
+          } else {
+            audioRef.current.addEventListener('canplay', canplayHandler, { once: true });
+            audioRef.current.addEventListener('error', errorHandler, { once: true });
+          }
+        });
+        
+        // Now play
+        await audioRef.current.play();
+        console.log(`▶ Scene ${currentScene + 1}: Playing audio successfully`);
+      } catch (err) {
+        console.error(`❌ Scene ${currentScene + 1}: Audio failed -`, err instanceof Error ? err.message : String(err));
+        // Try playing without waiting for canplay
+        if (audioRef.current) {
+          try {
+            audioRef.current.src = audioFile;
+            audioRef.current.muted = isMuted;
+            await audioRef.current.play();
+            console.log(`▶ Scene ${currentScene + 1}: Playing on retry`);
+          } catch (retryErr) {
+            console.error(`❌ Scene ${currentScene + 1}: Retry failed -`, retryErr);
+          }
+        }
+      }
+    };
     
-    // Play audio synchronized with scene
-    audioRef.current.play().then(() => {
-      console.log(`▶ Scene ${currentScene + 1}: Playing audio`);
-    }).catch((err) => {
-      console.error(`❌ Scene ${currentScene + 1}: Play failed -`, err.message);
-    });
-
+    playAudio();
+    
   }, [currentScene, isPlaying, isMuted]);
 
   // Scene timer - advances scenes based on audio duration
@@ -129,7 +187,7 @@ export default function CinematicRLM() {
     if (!isPlaying) return;
 
     const sceneData = getSceneData(currentScene);
-    const sceneDuration = sceneData.duration * 1000; // Convert to ms
+    const sceneDuration = sceneData.duration * 1000; // Convert to ms (using actual audio duration)
     const interval = 100; // Update every 100ms
     
     let elapsed = sceneProgress * sceneDuration;
