@@ -1,0 +1,280 @@
+{
+  "title": "Recursive Language Models",
+  "authors": ["Alex L. Zhang", "Tim Kraska", "Omar Khattab"],
+  "affiliation": "MIT CSAIL",
+  "arxiv_url": "https://arxiv.org/abs/2512.24601",
+  "github_url": "https://github.com/alexzhang13/rlm",
+  "blog_url": "https://alexzhang13.github.io/blog/2025/rlm/",
+  "publication_date": "2025-12-31",
+  "abstract": "We study allowing large language models (LLMs) to process arbitrarily long prompts through the lens of inference-time scaling. We propose Recursive Language Models (RLMs), a general inference paradigm that treats long prompts as part of an external environment and allows the LLM to programmatically examine, decompose, and recursively call itself over snippets of the prompt.",
+  "key_insights": [
+    {
+      "author": "Alex Zhang",
+      "handle": "@a1zhang",
+      "quote": "Much like the switch in 2025 from language models to reasoning models, we think 2026 will be all about the switch to Recursive Language Models (RLMs). It turns out that models can be far more powerful if you allow them to treat their own prompts as an object in an external environment.",
+      "highlight": "2026 will be the year of RLMs"
+    },
+    {
+      "author": "Alex Zhang",
+      "handle": "@a1zhang",
+      "quote": "On the OOLONG benchmark, RLMs with GPT-5-mini outperforms GPT-5 by over 110% gains (more than double!) on 132k-token sequences and is cheaper to query on average.",
+      "highlight": "110%+ performance gains with smaller model"
+    },
+    {
+      "author": "Omar Khattab",
+      "handle": "@lateinteraction",
+      "quote": "Most people (mis)understand RLMs to be about LLMs invoking themselves. The deeper insight is LLMs interacting with their own prompts as objects.",
+      "highlight": "Prompts as manipulable objects"
+    },
+    {
+      "author": "Omar Khattab",
+      "handle": "@lateinteraction",
+      "quote": "My favorite part of Alex's post is studying what the recursive LM actually decides to do—how does it take a variable with 10M tokens and figure it out? You see strategies like: peeking, map/reduce, summarization, and output accumulation.",
+      "highlight": "Emergent strategies: peeking, map/reduce, summarization"
+    }
+  ],
+  "core_concepts": [
+    {
+      "id": "recursive-decomposition",
+      "title": "Recursive Decomposition",
+      "icon": "GitBranch",
+      "simple_explanation": "Instead of processing a huge prompt all at once, the model breaks it into smaller chunks and processes them recursively, like dividing a big task into sub-tasks.",
+      "technical_definition": "A paradigm where the root LM (depth=0) can spawn isolated sub-RLM instances using transformed versions of the context with their own isolated environments. Each recursive call operates on a subset of the original context.",
+      "analogy": "Like a manager delegating parts of a large project to team members, who can further delegate to their own teams if needed.",
+      "why_it_matters": "Enables processing of contexts 100x beyond model context windows without degradation. Even within normal limits, improves accuracy by avoiding 'context rot'.",
+      "misconception": "NOT just about LLMs calling themselves repeatedly. The key is treating prompts as manipulable objects in an external environment.",
+      "visual_type": "recursion-tree",
+      "demo_example": {
+        "input": "Summarize this 10M token document",
+        "decomposition": [
+          {
+            "depth": 0,
+            "query": "Summarize 10M token document",
+            "strategy": "partition-map",
+            "sub_queries": [
+              {"depth": 1, "query": "Summarize section 1 (0-1M tokens)", "result": "Summary A"},
+              {"depth": 1, "query": "Summarize section 2 (1M-2M tokens)", "result": "Summary B"},
+              {"depth": 1, "query": "Summarize section 3 (2M-3M tokens)", "result": "Summary C"}
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "repl-environment",
+      "title": "REPL Environment",
+      "icon": "Terminal",
+      "simple_explanation": "The model operates inside a Python notebook environment where the huge context is stored as a variable. The model writes code to inspect, slice, and process this variable.",
+      "technical_definition": "A Python REPL (Read-Eval-Print Loop) Notebook environment similar to Jupyter that stores the user's prompt as a variable in memory. The root LM interacts by outputting code blocks and receives truncated output in its context.",
+      "analogy": "Like having a massive dataset loaded in a Jupyter notebook. You write Python code to explore, filter, and analyze it without loading the entire dataset into your working memory.",
+      "why_it_matters": "The context window of the root LM rarely gets clogged because it never directly sees the entire context. Its input context grows slowly as it strategically explores the data.",
+      "key_features": [
+        "Context stored as Python variable",
+        "Model writes code to inspect/slice/decompose",
+        "Output truncated and fed back to model",
+        "Final answer via FINAL() or FINAL_VAR() tags"
+      ],
+      "visual_type": "repl-flow",
+      "demo_example": {
+        "steps": [
+          {"stage": "Read", "action": "User query received", "context_size": "10M tokens"},
+          {"stage": "Eval", "action": "LM writes: context[:1000]", "output": "First 1000 chars"},
+          {"stage": "Print", "action": "REPL executes code", "result": "Preview of context"},
+          {"stage": "Loop", "action": "LM decides next action", "decision": "Grep for keywords"}
+        ]
+      }
+    },
+    {
+      "id": "context-chunking",
+      "title": "Context Chunking",
+      "icon": "Layers",
+      "simple_explanation": "The model intelligently decides how to split large contexts into manageable pieces, adapting its strategy based on the query and context structure.",
+      "technical_definition": "Dynamic partitioning of context based on query requirements. The model adaptively chooses chunk sizes and strategies (peeking, grepping, mapping) at test time rather than using fixed preprocessing.",
+      "analogy": "Like reading a massive book by first checking the table of contents, then jumping to relevant chapters, and only reading specific sections in detail.",
+      "why_it_matters": "Unlike rigid retrieval systems, RLMs defer chunking decisions to the model, which can adapt based on the specific query and context structure.",
+      "strategies": [
+        {
+          "name": "Peeking",
+          "description": "Grab first N characters to understand structure",
+          "use_case": "Initial context exploration"
+        },
+        {
+          "name": "Grepping",
+          "description": "Search for keywords or regex patterns",
+          "use_case": "Narrow down relevant sections"
+        },
+        {
+          "name": "Partition + Map",
+          "description": "Split context into chunks, process in parallel",
+          "use_case": "Semantic mapping over large datasets"
+        },
+        {
+          "name": "Summarization",
+          "description": "Condense sections hierarchically",
+          "use_case": "Long-output generation tasks"
+        }
+      ],
+      "visual_type": "context-heatmap",
+      "demo_example": {
+        "total_tokens": 10000000,
+        "chunks": [
+          {"range": "0-1000", "strategy": "peek", "accessed": true},
+          {"range": "1000-50000", "strategy": "grep", "pattern": "user_id", "accessed": true},
+          {"range": "50000-100000", "strategy": "map", "sub_queries": 5, "accessed": true},
+          {"range": "100000-10000000", "strategy": "none", "accessed": false}
+        ]
+      }
+    },
+    {
+      "id": "sub-query-delegation",
+      "title": "Sub-Query Delegation",
+      "icon": "ArrowRightLeft",
+      "simple_explanation": "The root LM can call smaller LMs (like GPT-5-mini) to answer specific sub-questions about parts of the context, then combine their answers.",
+      "technical_definition": "The root LM (depth=0) can recursively call LMs (depth=1) inside its REPL environment. These recursive calls operate on transformed subsets of context and return results to the root environment.",
+      "analogy": "A senior engineer breaking down a complex problem and assigning specific tasks to junior developers, then integrating their solutions.",
+      "why_it_matters": "Recursive depth of 1 is sufficient for most tasks. Using smaller models (GPT-5-mini) for sub-queries makes the system cheaper while maintaining or exceeding frontier model performance.",
+      "performance": {
+        "oolong_132k": {
+          "gpt5": "Baseline",
+          "rlm_gpt5_mini": "+114% improvement",
+          "cost": "Comparable to GPT-5"
+        }
+      },
+      "visual_type": "delegation-flow",
+      "demo_example": {
+        "root_lm": "GPT-5 (or GPT-5-mini)",
+        "recursive_calls": [
+          {"query": "Label questions in chunk 1", "model": "GPT-5-mini", "depth": 1},
+          {"query": "Label questions in chunk 2", "model": "GPT-5-mini", "depth": 1},
+          {"query": "Label questions in chunk 3", "model": "GPT-5-mini", "depth": 1}
+        ],
+        "aggregation": "Root LM combines labels and answers original query"
+      }
+    }
+  ],
+  "benchmarks": [
+    {
+      "name": "OOLONG",
+      "description": "Long-context reasoning over fine-grained information",
+      "context_length": "132k - 263k tokens",
+      "results": {
+        "gpt5": "Baseline",
+        "gpt5_mini": "Lower performance",
+        "rlm_gpt5_mini": "+114% over GPT-5",
+        "rlm_gpt5": "+49% over GPT-5 (at 263k)"
+      },
+      "key_finding": "RLM with smaller model outperforms frontier model by 2x+"
+    },
+    {
+      "name": "BrowseComp-Plus",
+      "description": "Multi-hop queries over document corpus",
+      "context_length": "Up to 1000 documents (~5M tokens)",
+      "results": {
+        "gpt5": "Performance drops with scale",
+        "rlm_gpt5": "Maintains perfect performance at 1000 docs",
+        "react_bm25": "Iterative but slower"
+      },
+      "key_finding": "Only RLM maintains performance at 1000+ document scale"
+    },
+    {
+      "name": "LoCoDiff",
+      "description": "Long git diff history tracking",
+      "context_length": "75k+ tokens",
+      "results": {
+        "gpt5": "<10% success at 75k+",
+        "rlm_gpt5": "Programmatically processes diffs"
+      },
+      "key_finding": "RLMs one-shot programmatic tasks that defeat standard LMs"
+    }
+  ],
+  "code_examples": [
+    {
+      "title": "Basic RLM Usage",
+      "description": "Simple API call that feels like standard LLM usage",
+      "language": "python",
+      "code": "from rlm import RLM\n\n# Initialize RLM with your preferred model\nrlm = RLM(model=\"gpt-5-mini\")\n\n# Query with huge context - feels like a normal LLM call\nresponse = rlm.completion(\n    query=\"Summarize the key findings\",\n    context=ten_million_token_document\n)\n\nprint(response)  # Returns summary",
+      "simplified": "rlm = RLM(model='gpt-5-mini')\nresponse = rlm.completion(query, huge_context)"
+    },
+    {
+      "title": "Peeking Strategy",
+      "description": "Root LM inspects context structure before processing",
+      "language": "python",
+      "code": "# Root LM writes this code in REPL:\npreview = context[:2000]\nprint(preview)\n\n# Output (truncated) returns to LM:\n# Date: Dec 12, 2022 || User: 63685 || Instance: How many...\n# Date: Dec 30, 2024 || User: 35875 || Instance: What war...\n\n# LM decides: 'I see a pattern - Date || User || Instance'",
+      "simplified": "preview = context[:2000]  # LM peeks at structure"
+    },
+    {
+      "title": "Grepping Strategy",
+      "description": "Search for specific patterns to narrow context",
+      "language": "python",
+      "code": "import re\n\n# Root LM searches for specific user IDs\nuser_ids = ['67144', '53321', '38876']\npattern = r'User: (' + '|'.join(user_ids) + r')'\n\n# Find matching lines\nmatches = [line for line in context.split('\\n') \n           if re.search(pattern, line)]\n\n# Now recursively process only matching lines\nfor chunk in chunk_list(matches, 10):\n    result = recursive_lm(\"Label these questions\", chunk)",
+      "simplified": "matches = grep(context, user_ids)  # Narrow search"
+    },
+    {
+      "title": "Partition + Map",
+      "description": "Split context and process chunks in parallel",
+      "language": "python",
+      "code": "# Split 10M tokens into 100 chunks of 100k each\nchunk_size = 100000\nchunks = [context[i:i+chunk_size] \n          for i in range(0, len(context), chunk_size)]\n\n# Map: Process each chunk with recursive LM\nresults = []\nfor i, chunk in enumerate(chunks[:10]):  # First 10 chunks\n    result = recursive_lm(\n        f\"Label questions in chunk {i}\",\n        chunk\n    )\n    results.append(result)\n\n# Reduce: Combine results\nfinal_answer = combine_results(results)",
+      "simplified": "chunks = split(context, 100000)\nresults = map(recursive_lm, chunks)"
+    },
+    {
+      "title": "FINAL Answer",
+      "description": "Root LM signals completion with FINAL tag",
+      "language": "python",
+      "code": "# Root LM can output directly:\nFINAL(\"The answer is 42.\")\n\n# Or use a variable from REPL:\nfinal_answer = compute_answer(processed_context)\nFINAL_VAR(final_answer)\n\n# RLM extracts answer and returns to user",
+      "simplified": "FINAL(answer)  # Signal completion"
+    }
+  ],
+  "visuals": [
+    {
+      "id": "teaser-figure",
+      "type": "architecture-diagram",
+      "title": "RLM Architecture Overview",
+      "description": "Shows how RLM wraps standard LM calls with REPL environment",
+      "source": "blog_post",
+      "animation_type": "flow-reveal"
+    },
+    {
+      "id": "repl-flow",
+      "type": "sequence-diagram",
+      "title": "REPL Execution Flow",
+      "description": "Step-by-step REPL interaction showing Read-Eval-Print-Loop",
+      "source": "blog_post",
+      "animation_type": "step-through"
+    },
+    {
+      "id": "recursion-tree",
+      "type": "tree-diagram",
+      "title": "Query Decomposition Tree",
+      "description": "Visual representation of recursive query breakdown",
+      "source": "paper",
+      "animation_type": "expand-collapse"
+    },
+    {
+      "id": "performance-chart",
+      "type": "bar-chart",
+      "title": "OOLONG Benchmark Results",
+      "description": "Performance comparison at 132k and 263k tokens",
+      "source": "paper",
+      "animation_type": "bar-grow"
+    },
+    {
+      "id": "strategies-overview",
+      "type": "grid",
+      "title": "Emergent RLM Strategies",
+      "description": "Peeking, Grepping, Partition+Map, Summarization",
+      "source": "blog_post",
+      "animation_type": "stagger-fade"
+    }
+  ],
+  "resources": {
+    "paper_pdf": "https://arxiv.org/pdf/2512.24601",
+    "paper_html": "https://arxiv.org/html/2512.24601",
+    "github": "https://github.com/alexzhang13/rlm",
+    "minimal_impl": "https://github.com/alexzhang13/rlm-minimal",
+    "blog": "https://alexzhang13.github.io/blog/2025/rlm/",
+    "twitter": {
+      "alex_zhang": "https://x.com/a1zhang/status/1978469116542337259",
+      "omar_khattab": "https://x.com/lateinteraction/status/2007212972721275281"
+    }
+  }
+}

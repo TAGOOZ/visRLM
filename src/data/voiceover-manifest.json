@@ -1,0 +1,61 @@
+{
+  "scenes": [
+    {
+      "id": 1,
+      "duration": 3,
+      "audioFile": "/audio/scene-1.mp3",
+      "text": "Recursive Language Models explained",
+      "startTime": 0,
+      "title": "Introduction",
+      "description": "Title scene introducing RLMs"
+    },
+    {
+      "id": 2,
+      "duration": 6,
+      "audioFile": "/audio/scene-2.mp3",
+      "text": "The context window challenge: how do we process documents longer than the model's memory?",
+      "startTime": 3,
+      "title": "The Problem",
+      "description": "Context window limitations"
+    },
+    {
+      "id": 3,
+      "duration": 4,
+      "audioFile": "/audio/scene-3.mp3",
+      "text": "A query arrives. The model must decide how to approach it.",
+      "startTime": 9,
+      "title": "Query Arrival",
+      "description": "User query input processing"
+    },
+    {
+      "id": 4,
+      "duration": 6,
+      "audioFile": "/audio/scene-4.mp3",
+      "text": "The model decomposes the problem into sub-queries, each handled by a recursive call.",
+      "startTime": 13,
+      "title": "Recursive Decomposition",
+      "description": "Strategy tree formation"
+    },
+    {
+      "id": 5,
+      "duration": 8,
+      "audioFile": "/audio/scene-5.mp3",
+      "text": "Each sub-LLM processes its chunk independently, using tools like grep, peek, and summarize.",
+      "startTime": 19,
+      "title": "Parallel Processing",
+      "description": "Sub-LLM detail processing"
+    },
+    {
+      "id": 6,
+      "duration": 5,
+      "audioFile": "/audio/scene-6.mp3",
+      "text": "Results are aggregated into the final answer. This is the power of recursive language models.",
+      "startTime": 27,
+      "title": "Synthesis",
+      "description": "Final answer generation"
+    }
+  ],
+  "totalDuration": 32,
+  "version": "1.0.0",
+  "project": "RLMs Visualizer - 3b1b Cinematic"
+}
