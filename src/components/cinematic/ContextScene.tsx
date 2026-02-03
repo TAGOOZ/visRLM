@@ -50,6 +50,7 @@ export function ContextScene() {
         <div className="bg-[#252a4a] px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 flex items-center gap-2 sm:gap-3 border-b border-[#2a3050]">
           <FileText className="w-4 h-4 sm:w-5 sm:h-5 text-[#58C4DC]" />
           <span className="text-xs sm:text-sm text-[#9FA4B8] font-mono">api_server.py</span>
+          <span className="text-[10px] sm:text-xs text-[#f59e0b] ml-2 font-mono">(Fictional Demo)</span>
           <span className="text-[10px] sm:text-xs text-[#6B7280] ml-auto hidden sm:block">
             {EXAMPLE_CONTEXT.length.toLocaleString()} characters • 450 lines
           </span>

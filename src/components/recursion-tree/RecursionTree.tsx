@@ -374,6 +374,12 @@ export default function RecursionTree({
         <div className="flex items-center gap-2">
           <Terminal className="w-4 h-4 text-[#22c55e]" aria-hidden="true" />
           <span className="font-mono text-sm text-[#e5e5e5]">recursion_tree.visualizer</span>
+          <Badge 
+            variant="outline" 
+            className="ml-2 border-[#f59e0b] text-[#f59e0b] text-xs font-mono"
+          >
+            Illustrative Example
+          </Badge>
         </div>
         <div className="flex items-center gap-2 ml-auto">
           <div className="terminal-dot terminal-dot-red" aria-hidden="true" />

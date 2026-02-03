@@ -105,7 +105,7 @@ export default function PlaygroundPage() {
               <div className="flex items-center gap-3">
                 <Suspense fallback={null}>
                   <ExportFeatures 
-                    code="# Example RLM code\nfrom rlm import RLM\n\nrlm = RLM(model='gpt-5-mini')\nresponse = rlm.completion(query, context)"
+                    code="# Example RLM code\nfrom rlm import RLM\n\nrlm = RLM(backend='openai', backend_kwargs={'model_name': 'gpt-5-nano'})\nresponse = rlm.completion(query, context).response"
                   />
                 </Suspense>
                 <Badge 

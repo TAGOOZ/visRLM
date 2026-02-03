@@ -138,6 +138,12 @@ export default function LandingPage() {
                   <div className="flex items-center gap-2">
                     <Terminal className="w-4 h-4 text-[#22c55e]" aria-hidden="true" />
                     <span className="font-mono text-sm text-[#e5e5e5]">rlm_demo.py</span>
+                    <Badge 
+                      variant="outline" 
+                      className="ml-2 border-[#f59e0b] text-[#f59e0b] text-xs font-mono"
+                    >
+                      Pseudocode
+                    </Badge>
                   </div>
                   <div className="flex items-center gap-2 ml-auto">
                     <div className="terminal-dot terminal-dot-red" aria-hidden="true" />
@@ -149,16 +155,16 @@ export default function LandingPage() {
                   <p className="text-[#737373]"># RLMs enable 100x context scaling</p>
                   <p><span className="text-[#a855f7]">from</span> rlm <span className="text-[#a855f7]">import</span> RLM</p>
                   <p className="text-[#737373]">&nbsp;</p>
-                  <p>rlm = RLM(model=<span className="text-[#22c55e]">&quot;gpt-5-mini&quot;</span>)</p>
+                  <p>rlm = RLM(backend=<span className="text-[#22c55e]">&quot;openai&quot;</span>, backend_kwargs={{<span className="text-[#22c55e]">&quot;model_name&quot;</span>: <span className="text-[#22c55e]">&quot;gpt-5-nano&quot;</span>}})</p>
                   <p className="text-[#737373]">&nbsp;</p>
-                  <p><span className="text-[#737373]"># Process 10M tokens like a single call</span></p>
+                  <p><span className="text-[#737373]"># Process 10M tokens with the same interface as a single LLM call</span></p>
                   <p>response = rlm.completion(</p>
                   <p className="pl-4">query=<span className="text-[#22c55e]">&quot;Summarize findings&quot;</span>,</p>
                   <p className="pl-4">context=ten_million_token_doc</p>
                   <p>)</p>
                   <p className="text-[#737373]">&nbsp;</p>
-                  <p className="text-[#06b6d4]">→ 110% better than GPT-5 on OOLONG</p>
-                  <p className="text-[#06b6d4]">→ Cheaper per query on average</p>
+                  <p className="text-[#06b6d4]">→ ~114% better than GPT-5 on OOLONG</p>
+                  <p className="text-[#06b6d4]">→ Median cheaper per query (outliers may be more expensive)</p>
                   <p className="text-[#737373]">&nbsp;</p>
                   <p className="flex items-center gap-1 text-[#22c55e]">
                     <span>$</span>
@@ -274,7 +280,7 @@ export default function LandingPage() {
           <h2 id="stats-heading" className="sr-only">Performance Statistics</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center" role="list" aria-label="Performance metrics">
             <div role="listitem">
-              <p className="text-4xl font-mono font-bold text-[#22c55e] mb-2">110%+</p>
+              <p className="text-4xl font-mono font-bold text-[#22c55e] mb-2">~114%</p>
               <p className="font-mono text-sm text-[#a3a3a3]">Performance gain over GPT-5</p>
               <p className="font-mono text-xs text-[#525252] mt-1">on OOLONG benchmark (132k tokens)</p>
             </div>
@@ -333,7 +339,7 @@ export default function LandingPage() {
             <div className="flex items-center gap-2">
               <Terminal className="w-5 h-5 text-[#22c55e]" aria-hidden="true" />
               <span className="font-mono text-[#a3a3a3]">
-                RLMs Visualizer — Built for the OpenCode × Fireworks AI showcase
+                RLMs Visualizer — Interactive research visualization
               </span>
             </div>
             <div className="flex items-center gap-6">

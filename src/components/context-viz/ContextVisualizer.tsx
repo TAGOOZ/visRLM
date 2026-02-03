@@ -111,6 +111,12 @@ export default function ContextVisualizer({
         <div className="flex items-center gap-2">
           <Layers className="w-4 h-4 text-[#22c55e]" aria-hidden="true" />
           <span className="font-mono text-sm text-[#e5e5e5]">context_visualizer.dat</span>
+          <Badge 
+            variant="outline" 
+            className="ml-2 border-[#f59e0b] text-[#f59e0b] text-xs font-mono"
+          >
+            Simulated Patterns
+          </Badge>
         </div>
         <div className="flex items-center gap-2 ml-auto">
           <div className="terminal-dot terminal-dot-red" aria-hidden="true" />

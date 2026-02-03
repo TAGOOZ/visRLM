@@ -256,6 +256,12 @@ export default function REPLSimulator({
         <div className="flex items-center gap-2">
           <Terminal className="w-4 h-4 text-[#22c55e]" aria-hidden="true" />
           <span className="font-mono text-sm text-[#e5e5e5]">repl_simulator.exe</span>
+          <Badge 
+            variant="outline" 
+            className="ml-2 border-[#f59e0b] text-[#f59e0b] text-xs font-mono"
+          >
+            Demo Scenario
+          </Badge>
         </div>
         <div className="flex items-center gap-2 ml-auto">
           <div className="terminal-dot terminal-dot-red" aria-hidden="true" />

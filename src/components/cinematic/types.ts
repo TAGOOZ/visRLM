@@ -64,10 +64,11 @@ export const scenes: Scene[] = [
   },
 ];
 
-export const EXAMPLE_CONTEXT = `# Python API Server - Code Review Notes
+export const EXAMPLE_CONTEXT = `# Python API Server - Code Review Notes (Fictional Demo Scenario)
 # File: api_server.py (Lines 1-179)
 # Last Modified: January 15, 2025
 # Reviewer: Alex Zhang (MIT CSAIL)
+# NOTE: This is a fictional demo scenario for visualization purposes`
 
 ## 1. Authentication System (Lines 1-85)
 class AuthenticationManager:
@@ -244,9 +245,9 @@ class ErrorHandler:
 #
 # Next Review: February 15, 2025`;
 
-export const EXAMPLE_QUERY = "What was the performance improvement for database queries and when was the bug fix implemented?";
+export const EXAMPLE_QUERY = "[Demo Scenario] What was the performance improvement for database queries and when was the bug fix implemented?";
 
-export const EXAMPLE_ANSWER = "The database query performance improved from 450ms to 120ms average query time. The bug fix that added exponential backoff for retries was implemented on January 10, 2025.";
+export const EXAMPLE_ANSWER = "[Demo Scenario] The database query performance improved from 450ms to 120ms average query time. The bug fix that added exponential backoff for retries was implemented on January 10, 2025.";
 
 export interface TreeNode {
   id: string;
@@ -273,12 +274,12 @@ export interface DetailData {
 }
 
 export const detailData: DetailData = {
-  title: 'Sub-LLM #2',
-  input: "Find Lisa Park's role transition date",
-  chunk: `3. Team Updates (Jennifer Walsh)
+  title: 'Sub-LLM #2 [Demo Scenario]',
+  input: "[Fictional Demo] Find Lisa Park's role transition date",
+  chunk: `[Fictional Demo Scenario] 3. Team Updates (Jennifer Walsh)
    - New hires: 3 backend engineers...
    - Offboarding: Lisa Park transitioning to Advisory role Feb 1
    - Team morale score: 8.7/10...`,
-  processing: 'Searching for "Lisa Park" and "role"...',
-  result: 'Found: Lisa Park → Advisory role, Date: February 1, 2025',
+  processing: '[Demo] Searching for "Lisa Park" and "role"...',
+  result: '[Demo Result] Found: Lisa Park → Advisory role, Date: February 1, 2025',
 };

@@ -116,7 +116,7 @@ export default function CodePlayground() {
     // Simulate execution with typing effect
     const lines = [
       '$ python rlm_simulation.py',
-      '[INFO] Initializing RLM with gpt-5-mini...',
+      '[INFO] Initializing RLM with backend=openai, model=gpt-5-nano...',
       '[INFO] Loading context: 10,000,000 tokens',
       '[INFO] REPL environment ready',
       '',
@@ -134,8 +134,8 @@ export default function CodePlayground() {
       '',
       '[STATS] Total tokens processed: 10,000,000',
       '[STATS] Recursive calls: 100',
-      '[STATS] Execution time: 45.2s',
-      '[STATS] Cost: $0.023 (vs $0.045 for GPT-5)',
+      '[STATS] Execution time: Variable based on context size',
+      '[STATS] Cost: Lower than direct LLM call',
     ];
 
     for (const line of lines) {
@@ -164,6 +164,12 @@ export default function CodePlayground() {
         <div className="flex items-center gap-2">
           <Code2 className="w-4 h-4 text-[#22c55e]" aria-hidden="true" />
           <span className="font-mono text-sm text-[#e5e5e5]">code_playground.py</span>
+          <Badge 
+            variant="outline" 
+            className="ml-2 border-[#f59e0b] text-[#f59e0b] text-xs font-mono"
+          >
+            Simulation
+          </Badge>
         </div>
         <div className="flex items-center gap-2 ml-auto">
           <div className="terminal-dot terminal-dot-red" aria-hidden="true" />
