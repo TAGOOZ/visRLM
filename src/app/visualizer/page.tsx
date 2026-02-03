@@ -299,7 +299,7 @@ export default function VisualizerPage() {
         {/* Toggle Sidebar Button */}
         <button
           onClick={() => setShowConcepts(!showConcepts)}
-          className="fixed left-0 top-1/2 -translate-y-1/2 z-[100] bg-[#111111] border border-[#262626] border-l-0 p-2 rounded-r-lg hover:bg-[#1a1a1a] transition-colors focus:outline-none focus:ring-2 focus:ring-[#22c55e] focus:ring-offset-2 focus:ring-offset-[#0a0a0a] shadow-lg"
+          className="fixed left-0 top-20 z-[9999] bg-[#111111] border border-[#262626] border-l-0 p-2 rounded-r-lg hover:bg-[#1a1a1a] transition-colors focus:outline-none focus:ring-2 focus:ring-[#22c55e] focus:ring-offset-2 focus:ring-offset-[#0a0a0a] shadow-lg"
           aria-label={showConcepts ? 'Hide concepts sidebar' : 'Show concepts sidebar'}
           aria-expanded={showConcepts}
           style={{ display: 'block', visibility: 'visible' }}
