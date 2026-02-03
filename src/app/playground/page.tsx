@@ -239,6 +239,15 @@ export default function PlaygroundPage() {
       <Suspense fallback={null}>
         <KeyboardShortcuts />
       </Suspense>
+
+      {/* Footer */}
+      <footer className="py-6 px-4 border-t border-[#262626] mt-8">
+        <div className="max-w-7xl mx-auto flex items-center justify-center">
+          <p className="font-mono text-xs text-[#525252]">
+            Visualizer by <a href="https://x.com/TAG00Z" target="_blank" rel="noopener noreferrer" className="text-[#737373] hover:text-[#22c55e] transition-colors">Mustafa Tag Eldeen</a>
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }

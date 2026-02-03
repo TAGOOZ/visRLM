@@ -376,6 +376,9 @@ export default function CinematicRLM() {
         <p className="text-[10px] sm:text-xs text-[#6B7280] mt-0.5 sm:mt-1">
           3Blue1Brown Style Visualization {isMuted && '🔇'}
         </p>
+        <p className="text-[10px] sm:text-xs text-[#6B7280] mt-0.5">
+          by <a href="https://x.com/TAG00Z" target="_blank" rel="noopener noreferrer" className="text-[#58C4DC] hover:text-[#58C4DC]/80 transition-colors">Mustafa Tag Eldeen</a>
+        </p>
       </div>
 
       {/* Keyboard Shortcuts Hint - Responsive */}

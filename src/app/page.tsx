@@ -15,7 +15,8 @@ import {
   Quote,
   Github,
   FileText,
-  Play
+  Play,
+  Twitter
 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -40,6 +41,10 @@ export default function LandingPage() {
               <Terminal className="w-5 h-5 text-[#22c55e]" aria-hidden="true" />
               <span className="font-mono text-lg font-semibold text-[#e5e5e5]">
                 RLMs<span className="text-[#22c55e]">.viz</span>
+              </span>
+              <span className="text-[#525252] mx-2">|</span>
+              <span className="font-mono text-xs text-[#737373]">
+                by <a href="https://x.com/TAG00Z" target="_blank" rel="noopener noreferrer" className="text-[#a3a3a3] hover:text-[#22c55e] transition-colors">Mustafa Tag Eldeen</a>
               </span>
             </div>
             <div className="flex items-center gap-6">
@@ -379,6 +384,9 @@ export default function LandingPage() {
             <p className="font-mono text-xs text-[#525252]">
               Paper by Alex L. Zhang, Tim Kraska, Omar Khattab (MIT CSAIL) • 
               arXiv:2512.24601
+            </p>
+            <p className="font-mono text-xs text-[#525252] mt-2">
+              Visualizer by <a href="https://x.com/TAG00Z" target="_blank" rel="noopener noreferrer" className="text-[#737373] hover:text-[#22c55e] transition-colors">Mustafa Tag Eldeen</a>
             </p>
           </div>
         </div>
