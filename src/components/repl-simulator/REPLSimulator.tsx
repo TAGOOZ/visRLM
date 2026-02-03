@@ -273,7 +273,7 @@ export default function REPLSimulator({
       {/* Main Content */}
       <div className="flex-1 flex">
         {/* Left: Step Visualization */}
-        <div className="flex-1 p-6 space-y-6">
+        <div className="flex-1 p-6 space-y-6 overflow-y-auto min-h-0">
           {/* Progress Bar */}
           <div className="space-y-2">
             <div className="flex items-center justify-between text-xs font-mono text-[#a3a3a3]">
