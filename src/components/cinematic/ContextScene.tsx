@@ -37,7 +37,7 @@ export function ContextScene() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
-      className="absolute inset-0 flex items-center justify-center bg-[#0a0e27] p-8"
+      className="absolute inset-0 flex items-center justify-center bg-[#0a0e27] p-2 sm:p-4 md:p-8"
       style={{ zIndex: 20 }}
     >
       <motion.div
@@ -47,26 +47,26 @@ export function ContextScene() {
         className="w-full max-w-3xl bg-[#1a1f3a] rounded-xl border border-[#2a3050] overflow-hidden shadow-2xl"
       >
         {/* Header */}
-        <div className="bg-[#252a4a] px-6 py-4 flex items-center gap-3 border-b border-[#2a3050]">
-          <FileText className="w-5 h-5 text-[#58C4DC]" />
-          <span className="text-sm text-[#9FA4B8] font-mono">api_server.py</span>
-          <span className="text-xs text-[#6B7280] ml-auto">
+        <div className="bg-[#252a4a] px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 flex items-center gap-2 sm:gap-3 border-b border-[#2a3050]">
+          <FileText className="w-4 h-4 sm:w-5 sm:h-5 text-[#58C4DC]" />
+          <span className="text-xs sm:text-sm text-[#9FA4B8] font-mono">api_server.py</span>
+          <span className="text-[10px] sm:text-xs text-[#6B7280] ml-auto hidden sm:block">
             {EXAMPLE_CONTEXT.length.toLocaleString()} characters • 450 lines
           </span>
         </div>
 
         {/* Content with Line Numbers */}
-        <div ref={scrollContainerRef} className="p-6 font-mono text-sm max-h-[480px] overflow-y-auto scroll-smooth">
+        <div ref={scrollContainerRef} className="p-2 sm:p-4 md:p-6 font-mono text-xs sm:text-sm max-h-[calc(100vh-200px)] sm:max-h-[480px] overflow-y-auto scroll-smooth">
           <div className="flex">
             {/* Line Numbers */}
-            <div className="flex-shrink-0 pr-4 border-r border-[#2a3050] text-right select-none">
+            <div className="flex-shrink-0 pr-2 sm:pr-4 border-r border-[#2a3050] text-right select-none">
               {lines.map((_, idx) => (
                 <motion.div
                   key={idx}
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: idx * 0.02, duration: 0.3 }}
-                  className="text-[#6B7280] text-xs leading-6 w-8"
+                  className="text-[#6B7280] text-[10px] sm:text-xs leading-5 sm:leading-6 w-6 sm:w-8"
                 >
                   {idx + 1}
                 </motion.div>

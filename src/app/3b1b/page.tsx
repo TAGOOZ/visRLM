@@ -289,7 +289,7 @@ export default function CinematicRLM() {
   }, []);
 
   return (
-    <div className="w-full h-screen bg-[#0a0e27] overflow-hidden relative">
+    <div className="w-full h-screen bg-[#0a0e27] overflow-hidden relative cinematic-container">
       {/* Background Grid */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
         <svg width="100%" height="100%">
@@ -302,10 +302,10 @@ export default function CinematicRLM() {
         </svg>
       </div>
 
-      {/* Main Container - 900x600 centered */}
-      <div className="absolute inset-0 flex items-center justify-center">
+      {/* Main Container - Responsive */}
+      <div className="absolute inset-0 flex items-center justify-center p-2 sm:p-4 lg:p-6">
         <motion.div
-          className="relative w-[900px] h-[600px] bg-[#0a0e27] rounded-lg overflow-hidden shadow-2xl"
+          className="relative w-full max-w-[900px] aspect-[3/2] max-h-[80vh] sm:max-h-[85vh] bg-[#0a0e27] rounded-lg overflow-hidden shadow-2xl"
           style={{
             boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(88, 196, 220, 0.1)',
           }}
@@ -327,16 +327,16 @@ export default function CinematicRLM() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.5, ease: 'easeInOut' }}
-              className="absolute inset-0"
+              className="absolute inset-0 w-full h-full"
             >
               <CurrentSceneComponent />
             </motion.div>
           </AnimatePresence>
 
           {/* Scene Label Overlay */}
-          <div className="absolute top-4 left-4 z-[100]">
-            <div className="px-3 py-1.5 rounded bg-[#1a1f3a]/80 border border-[#2a3050] text-xs">
-              <span className="text-[#58C4DC] font-mono">
+          <div className="absolute top-2 sm:top-4 left-2 sm:left-4 z-[100]">
+            <div className="px-2 sm:px-3 py-1 sm:py-1.5 rounded bg-[#1a1f3a]/80 border border-[#2a3050] text-xs">
+              <span className="text-[#58C4DC] font-mono text-[10px] sm:text-xs">
                 Scene {currentScene + 1}/{scenes.length}: {currentManifestData.title}
               </span>
             </div>
@@ -356,26 +356,37 @@ export default function CinematicRLM() {
         />
       </div>
 
-      {/* Header Info */}
-      <div className="absolute top-6 left-6 z-[100]">
-        <h1 className="text-xl font-bold text-white">
+      {/* Header Info - Responsive */}
+      <div className="absolute top-3 sm:top-6 left-3 sm:left-6 z-[100]">
+        <h1 className="text-base sm:text-xl font-bold text-white">
           RLMs <span className="text-[#58C4DC]">Explained</span>
         </h1>
-        <p className="text-xs text-[#6B7280] mt-1">
+        <p className="text-[10px] sm:text-xs text-[#6B7280] mt-0.5 sm:mt-1">
           3Blue1Brown Style Visualization {isMuted && '🔇'}
         </p>
       </div>
 
-      {/* Keyboard Shortcuts Hint */}
-      <div className="absolute top-6 right-6 z-[100]">
-        <div className="bg-[#1a1f3a]/80 border border-[#2a3050] rounded-lg p-3 text-xs text-[#6B7280]">
-          <div className="space-y-1">
+      {/* Keyboard Shortcuts Hint - Responsive */}
+      <div className="absolute top-3 sm:top-6 right-3 sm:right-6 z-[100] hidden sm:block">
+        <div className="bg-[#1a1f3a]/80 border border-[#2a3050] rounded-lg p-2 sm:p-3 text-[10px] sm:text-xs text-[#6B7280]">
+          <div className="space-y-0.5 sm:space-y-1">
             <div><span className="text-[#9FA4B8]">Space</span> Play/Pause</div>
             <div><span className="text-[#9FA4B8]">← →</span> Prev/Next Scene</div>
             <div><span className="text-[#9FA4B8]">R</span> Reset</div>
             <div><span className="text-[#9FA4B8]">M</span> Mute/Unmute</div>
           </div>
         </div>
+      </div>
+
+      {/* Mobile Shortcuts Toggle */}
+      <div className="absolute top-3 right-3 z-[100] sm:hidden">
+        <button
+          onClick={() => setIsMuted(!isMuted)}
+          className="bg-[#1a1f3a]/80 border border-[#2a3050] rounded-lg p-2 text-xs text-[#6B7280]"
+          aria-label={isMuted ? 'Unmute' : 'Mute'}
+        >
+          {isMuted ? '🔇' : '🔊'}
+        </button>
       </div>
     </div>
   );
