@@ -42,6 +42,7 @@ export default function CinematicRLM() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const sceneStartTimeRef = useRef<number>(0);
+  const audioEndedHandlerRef = useRef<(() => void) | null>(null);
 
   const currentSceneData = scenes[currentScene];
   const currentManifestData = getSceneData(currentScene);
@@ -104,6 +105,11 @@ export default function CinematicRLM() {
       setCamera(currentSceneData.camera);
     }
 
+    // Remove previous ended handler
+    if (audioEndedHandlerRef.current && audioRef.current) {
+      audioRef.current.removeEventListener('ended', audioEndedHandlerRef.current);
+    }
+
     // If not playing, just load the audio but don't play
     if (!isPlaying) {
       audioRef.current.src = audioFile;
@@ -162,6 +168,24 @@ export default function CinematicRLM() {
         // Now play
         await audioRef.current.play();
         console.log(`▶ Scene ${currentScene + 1}: Playing audio successfully`);
+        
+        // Add ended listener to advance to next scene when audio finishes
+        const endedHandler = () => {
+          console.log(`⏹ Scene ${currentScene + 1}: Audio ended naturally`);
+          if (currentScene < scenes.length - 1) {
+            console.log(`→ Scene ${currentScene + 1} → Scene ${currentScene + 2}`);
+            setCurrentScene(prev => prev + 1);
+            setSceneProgress(0);
+          } else {
+            console.log('🏁 Animation complete');
+            setIsPlaying(false);
+            setSceneProgress(1);
+          }
+        };
+        
+        audioEndedHandlerRef.current = endedHandler;
+        audioRef.current.addEventListener('ended', endedHandler, { once: true });
+        
       } catch (err) {
         console.error(`❌ Scene ${currentScene + 1}: Audio failed -`, err instanceof Error ? err.message : String(err));
         // Try playing without waiting for canplay
@@ -180,9 +204,15 @@ export default function CinematicRLM() {
     
     playAudio();
     
+    // Cleanup
+    return () => {
+      if (audioRef.current && audioEndedHandlerRef.current) {
+        audioRef.current.removeEventListener('ended', audioEndedHandlerRef.current);
+      }
+    };
   }, [currentScene, isPlaying, isMuted]);
 
-  // Scene timer - advances scenes based on audio duration
+  // Scene timer - updates progress bar only (scene advancement handled by audio ended event)
   useEffect(() => {
     if (!isPlaying) return;
 
@@ -190,10 +220,9 @@ export default function CinematicRLM() {
     const sceneDuration = sceneData.duration * 1000; // Convert to ms (using actual audio duration)
     const interval = 100; // Update every 100ms
     
-    let elapsed = sceneProgress * sceneDuration;
     sceneStartTimeRef.current = Date.now();
 
-    console.log(`⏱ Scene ${currentScene + 1}: Starting timer (${sceneDuration}ms)`);
+    console.log(`⏱ Scene ${currentScene + 1}: Starting progress timer (${sceneDuration}ms)`);
 
     timerRef.current = setInterval(() => {
       const now = Date.now();
@@ -201,23 +230,6 @@ export default function CinematicRLM() {
       const progress = Math.min(actualElapsed / sceneDuration, 1);
       
       setSceneProgress(progress);
-
-      // Check if scene should end
-      if (actualElapsed >= sceneDuration) {
-        console.log(`⏱ Scene ${currentScene + 1}: Timer complete`);
-        
-        if (currentScene < scenes.length - 1) {
-          // Move to next scene
-          console.log(`→ Scene ${currentScene + 1} → Scene ${currentScene + 2}`);
-          setCurrentScene(prev => prev + 1);
-          setSceneProgress(0);
-        } else {
-          // End of all scenes
-          console.log('🏁 Animation complete');
-          setIsPlaying(false);
-          setSceneProgress(1);
-        }
-      }
     }, interval);
 
     return () => {
