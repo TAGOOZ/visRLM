@@ -65,7 +65,7 @@ export const scenes: Scene[] = [
 ];
 
 export const EXAMPLE_CONTEXT = `# Python API Server - Code Review Notes
-# File: api_server.py (Lines 1-450)
+# File: api_server.py (Lines 1-179)
 # Last Modified: January 15, 2025
 # Reviewer: Alex Zhang (MIT CSAIL)
 
