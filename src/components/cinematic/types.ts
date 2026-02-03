@@ -68,7 +68,7 @@ export const EXAMPLE_CONTEXT = `# Python API Server - Code Review Notes (Fiction
 # File: api_server.py (Lines 1-179)
 # Last Modified: January 15, 2025
 # Reviewer: Alex Zhang (MIT CSAIL)
-# NOTE: This is a fictional demo scenario for visualization purposes`
+# NOTE: This is a fictional demo scenario for visualization purposes
 
 ## 1. Authentication System (Lines 1-85)
 class AuthenticationManager:

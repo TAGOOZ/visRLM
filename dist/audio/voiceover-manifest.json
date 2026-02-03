@@ -1,0 +1,61 @@
+{
+  "project": "3Blue1Brown-style RLMs Animation",
+  "generatedAt": "2026-02-02T18:00:07.317Z",
+  "voiceSettings": {
+    "voice": "pNInz6obpgDQGcFmaJgB",
+    "model": "eleven_multilingual_v2",
+    "stability": 0.5,
+    "clarity": 0.8
+  },
+  "scenes": [
+    {
+      "id": 1,
+      "filename": "scene-1.mp3",
+      "text": "Recursive Language Models explained",
+      "path": "/media/mustafa-tag-eldeen/563CBB613CBB3B373/visRLM/rlms-visualizer/public/audio/scene-1.mp3",
+      "size": 38078,
+      "duration": 3
+    },
+    {
+      "id": 2,
+      "filename": "scene-2.mp3",
+      "text": "Here's a meeting notes file with 1,247 characters. The Root LM loads the entire context.",
+      "path": "/media/mustafa-tag-eldeen/563CBB613CBB3B373/visRLM/rlms-visualizer/public/audio/scene-2.mp3",
+      "size": 114146,
+      "duration": 6
+    },
+    {
+      "id": 3,
+      "filename": "scene-3.mp3",
+      "text": "We ask: What is Lisa Park's role transition date and what action item is assigned to her?",
+      "path": "/media/mustafa-tag-eldeen/563CBB613CBB3B373/visRLM/rlms-visualizer/public/audio/scene-3.mp3",
+      "size": 81964,
+      "duration": 6
+    },
+    {
+      "id": 4,
+      "filename": "scene-4.mp3",
+      "text": "The Root LM analyzes the query and context size, then decides on a strategy: partition the context into chunks and process recursively.",
+      "path": "/media/mustafa-tag-eldeen/563CBB613CBB3B373/visRLM/rlms-visualizer/public/audio/scene-4.mp3",
+      "size": 158032,
+      "duration": 9
+    },
+    {
+      "id": 5,
+      "filename": "scene-5.mp3",
+      "text": "Sub-LLM number 2 searches its assigned chunk. It finds the answer in the Team Updates section.",
+      "path": "/media/mustafa-tag-eldeen/563CBB613CBB3B373/visRLM/rlms-visualizer/public/audio/scene-5.mp3",
+      "size": 98264,
+      "duration": 7
+    },
+    {
+      "id": 6,
+      "filename": "scene-6.mp3",
+      "text": "The answer is synthesized. Lisa Park transitions to an Advisory role on February 1st, with the action item to complete knowledge transfer sessions.",
+      "path": "/media/mustafa-tag-eldeen/563CBB613CBB3B373/visRLM/rlms-visualizer/public/audio/scene-6.mp3",
+      "size": 141314,
+      "duration": 10
+    }
+  ],
+  "totalDuration": 41
+}

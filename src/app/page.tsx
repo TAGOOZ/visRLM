@@ -155,7 +155,7 @@ export default function LandingPage() {
                   <p className="text-[#737373]"># RLMs enable 100x context scaling</p>
                   <p><span className="text-[#a855f7]">from</span> rlm <span className="text-[#a855f7]">import</span> RLM</p>
                   <p className="text-[#737373]">&nbsp;</p>
-                  <p>rlm = RLM(backend=<span className="text-[#22c55e]">&quot;openai&quot;</span>, backend_kwargs={{<span className="text-[#22c55e]">&quot;model_name&quot;</span>: <span className="text-[#22c55e]">&quot;gpt-5-nano&quot;</span>}})</p>
+                  <p>rlm = RLM(backend=<span className="text-[#22c55e]">&quot;openai&quot;</span>, backend_kwargs={'{'}<span className="text-[#22c55e]">&quot;model_name&quot;</span>: <span className="text-[#22c55e]">&quot;gpt-5-nano&quot;</span>{'}'})</p>
                   <p className="text-[#737373]">&nbsp;</p>
                   <p><span className="text-[#737373]"># Process 10M tokens with the same interface as a single LLM call</span></p>
                   <p>response = rlm.completion(</p>
