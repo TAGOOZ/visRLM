@@ -16,7 +16,7 @@ export interface Scene {
 export const scenes: Scene[] = [
   {
     id: 0,
-    duration: 3,
+    duration: 2.1,
     visibleLayer: 'title',
     camera: { x: 0, y: 0, zoom: 1 },
     title: 'Title',
@@ -24,7 +24,7 @@ export const scenes: Scene[] = [
   },
   {
     id: 1,
-    duration: 6,
+    duration: 14.5,
     visibleLayer: 'context',
     camera: { x: 0, y: 0, zoom: 1 },
     title: 'Context',
@@ -32,7 +32,7 @@ export const scenes: Scene[] = [
   },
   {
     id: 2,
-    duration: 4,
+    duration: 7.1,
     visibleLayer: 'query',
     camera: { x: 0, y: 0, zoom: 1.2 },
     title: 'Query',
@@ -40,7 +40,7 @@ export const scenes: Scene[] = [
   },
   {
     id: 3,
-    duration: 6,
+    duration: 15.5,
     visibleLayer: 'tree',
     camera: { x: 0, y: 0, zoom: 1.1 },
     title: 'Tree',
@@ -48,7 +48,7 @@ export const scenes: Scene[] = [
   },
   {
     id: 4,
-    duration: 8,
+    duration: 9.3,
     visibleLayer: 'detail',
     camera: { x: 0, y: 0, zoom: 1.3 },
     title: 'Detail',
@@ -56,7 +56,7 @@ export const scenes: Scene[] = [
   },
   {
     id: 5,
-    duration: 5,
+    duration: 9.6,
     visibleLayer: 'answer',
     camera: { x: 0, y: 0, zoom: 1 },
     title: 'Answer',
