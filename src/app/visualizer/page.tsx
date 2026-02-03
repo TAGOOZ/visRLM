@@ -29,6 +29,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import paperContent from '@/data/paper-content.json';
+import { ThreeB1BLogo } from '@/components/3b1b-logo/ThreeB1BLogo';
 
 // Lazy load heavy components
 const RecursionTree = dynamic(
@@ -194,8 +195,8 @@ export default function VisualizerPage() {
                 className="flex items-center gap-1 font-mono text-sm text-[#a3a3a3] hover:text-[#e5e5e5] transition-colors focus:outline-none focus:ring-2 focus:ring-[#22c55e] focus:ring-offset-2 focus:ring-offset-[#0a0a0a] rounded px-2 py-1"
                 aria-label="View 3Blue1Brown-style animation"
               >
-                <Film className="w-4 h-4" aria-hidden="true" />
-                3B1B Animation
+                <ThreeB1BLogo className="text-[#58C4DC]" size={18} />
+                <span>3B1B</span>
               </Link>
             </div>
           </div>

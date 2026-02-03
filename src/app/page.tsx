@@ -22,6 +22,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import paperContent from '@/data/paper-content.json';
+import { ThreeB1BLogo } from '@/components/3b1b-logo/ThreeB1BLogo';
 
 const conceptIcons: Record<string, React.ElementType> = {
   'recursive-decomposition': GitBranch,
@@ -48,6 +49,14 @@ export default function LandingPage() {
               </span>
             </div>
             <div className="flex items-center gap-6">
+              <Link 
+                href="/3b1b" 
+                className="flex items-center gap-1 font-mono text-sm text-[#a3a3a3] hover:text-[#e5e5e5] transition-colors focus:outline-none focus:ring-2 focus:ring-[#22c55e] focus:ring-offset-2 focus:ring-offset-[#0a0a0a] rounded px-2 py-1"
+                aria-label="View 3Blue1Brown-style animation"
+              >
+                <ThreeB1BLogo className="text-[#58C4DC]" size={18} />
+                <span>3B1B</span>
+              </Link>
               <Link 
                 href="/visualizer" 
                 className="font-mono text-sm text-[#a3a3a3] hover:text-[#e5e5e5] transition-colors focus:outline-none focus:ring-2 focus:ring-[#22c55e] focus:ring-offset-2 focus:ring-offset-[#0a0a0a] rounded px-2 py-1"

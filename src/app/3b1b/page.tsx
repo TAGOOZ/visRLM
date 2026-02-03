@@ -13,6 +13,7 @@ import {
   scenes,
 } from '@/components/cinematic';
 import voiceoverManifest from '@/data/voiceover-manifest.json';
+import { ThreeB1BLogo } from '@/components/3b1b-logo/ThreeB1BLogo';
 
 // Scene component mapping
 const sceneComponents: Record<string, React.FC> = {
@@ -370,9 +371,12 @@ export default function CinematicRLM() {
 
       {/* Header Info - Responsive */}
       <div className="absolute top-3 sm:top-6 left-3 sm:left-6 z-[100]">
-        <h1 className="text-base sm:text-xl font-bold text-white">
-          RLMs <span className="text-[#58C4DC]">Explained</span>
-        </h1>
+        <div className="flex items-center gap-2">
+          <ThreeB1BLogo className="text-[#58C4DC]" size={24} />
+          <h1 className="text-base sm:text-xl font-bold text-white">
+            RLMs <span className="text-[#58C4DC]">Explained</span>
+          </h1>
+        </div>
         <p className="text-[10px] sm:text-xs text-[#6B7280] mt-0.5 sm:mt-1">
           3Blue1Brown Style Visualization {isMuted && '🔇'}
         </p>
