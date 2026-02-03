@@ -115,11 +115,17 @@ export default function VisualizerPage() {
 
   // Keyboard shortcut handlers
   const handleStepChange = useCallback((direction: 'prev' | 'next') => {
+    console.log(`Step change requested: ${direction}, current concept: ${selectedConcept}`);
     if (selectedConcept === 'repl-environment') {
       setReplStep(prev => {
-        if (direction === 'prev') return Math.max(0, prev - 1);
-        return Math.min(9, prev + 1);
+        const newStep = direction === 'prev' 
+          ? Math.max(0, prev - 1) 
+          : Math.min(9, prev + 1);
+        console.log(`REPL step changed: ${prev} -> ${newStep}`);
+        return newStep;
       });
+    } else {
+      console.log(`Step change ignored - not in REPL environment mode`);
     }
   }, [selectedConcept]);
 
@@ -293,9 +299,10 @@ export default function VisualizerPage() {
         {/* Toggle Sidebar Button */}
         <button
           onClick={() => setShowConcepts(!showConcepts)}
-          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-[#111111] border border-[#262626] border-l-0 p-2 rounded-r-lg hover:bg-[#1a1a1a] transition-colors focus:outline-none focus:ring-2 focus:ring-[#22c55e] focus:ring-offset-2 focus:ring-offset-[#0a0a0a]"
+          className="fixed left-0 top-1/2 -translate-y-1/2 z-[100] bg-[#111111] border border-[#262626] border-l-0 p-2 rounded-r-lg hover:bg-[#1a1a1a] transition-colors focus:outline-none focus:ring-2 focus:ring-[#22c55e] focus:ring-offset-2 focus:ring-offset-[#0a0a0a] shadow-lg"
           aria-label={showConcepts ? 'Hide concepts sidebar' : 'Show concepts sidebar'}
           aria-expanded={showConcepts}
+          style={{ display: 'block', visibility: 'visible' }}
         >
           {showConcepts ? (
             <ChevronDown className="w-4 h-4 text-[#a3a3a3] rotate-90" aria-hidden="true" />
